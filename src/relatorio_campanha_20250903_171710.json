@@ -1,0 +1,61 @@
+{
+  "campanha": {
+    "data_inicio": "03/09/2025 17:14:10",
+    "data_fim": "03/09/2025 17:17:10",
+    "keywords_utilizadas": [
+      "supermercado",
+      "padaria",
+      "academia",
+      "clínica",
+      "frigorífico"
+    ],
+    "cidades_utilizadas": [
+      "São Paulo, SP"
+    ]
+  },
+  "resultados": {
+    "leads_coletados": 40,
+    "leads_qualificados": 40,
+    "leads_armazenados": 40,
+    "taxa_qualificacao": 100.0
+  },
+  "qualificacao": {
+    "data_geracao": "03/09/2025 17:17:10",
+    "total_leads": 40,
+    "leads_qualificados": 38,
+    "leads_nao_qualificados": 2,
+    "taxa_qualificacao": 95.0,
+    "score_medio": 3.4,
+    "score_distribuicao": {
+      "3": 20,
+      "4": 18,
+      "2": 2
+    },
+    "nivel_distribuicao": {
+      "Médio": 38,
+      "Baixo": 2
+    },
+    "top_criterios": [
+      [
+        "Endereço válido",
+        40
+      ],
+      [
+        "Nome válido",
+        40
+      ],
+      [
+        "Telefone válido",
+        37
+      ],
+      [
+        "Site ativo",
+        19
+      ]
+    ],
+    "resumo": "De 40 leads, 38 foram qualificados (95.0%)"
+  },
+  "sheets_stats": {},
+  "erros": [],
+  "resumo": "Campanha executada com sucesso! 40/40 leads qualificados"
+}

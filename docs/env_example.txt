@@ -1,0 +1,31 @@
+# Configurações da API do Google Places
+GOOGLE_PLACES_API_KEY=sua_chave_api_aqui
+
+# Configurações do Google Sheets
+GOOGLE_SHEETS_CREDENTIALS_FILE=credentials.json
+GOOGLE_SHEETS_SPREADSHEET_ID=seu_spreadsheet_id_aqui
+
+# Configurações do Firebase (opcional)
+FIREBASE_CREDENTIALS_FILE=firebase-credentials.json
+FIREBASE_PROJECT_ID=seu_projeto_id_aqui
+
+# Configurações do Twilio para WhatsApp
+TWILIO_ACCOUNT_SID=sua_account_sid_aqui
+TWILIO_AUTH_TOKEN=seu_auth_token_aqui
+TWILIO_PHONE_NUMBER=seu_numero_twilio_aqui
+
+# Configurações de e-mail
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+EMAIL_USER=seu_email@gmail.com
+EMAIL_PASSWORD=sua_senha_app_aqui
+
+# Configurações de scraping
+SCRAPING_DELAY=2
+MAX_RESULTS_PER_SEARCH=100
+HEADLESS_BROWSER=true
+
+# Configurações da empresa
+EMPRESA_NOME=Libra Energia
+REPRESENTANTE_NOME=Seu Nome
+REPRESENTANTE_TELEFONE=seu_telefone_aqui

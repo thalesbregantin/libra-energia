@@ -1,0 +1,64 @@
+[
+  {
+    "nome": "Supermercado Exemplo Ltda",
+    "telefone": "(11) 99999-9999",
+    "website": "https://www.exemplo.com.br",
+    "endereco": "Rua das Flores, 123, Centro, São Paulo, SP",
+    "cnae": "4721-1/01",
+    "fonte": "Teste",
+    "data_coleta": "03/09/2025 18:43:20",
+    "score": 5,
+    "criterios_atingidos": [
+      "Telefone válido",
+      "CNAE compatível",
+      "Endereço válido",
+      "Nome válido"
+    ],
+    "qualificado": true,
+    "nivel_qualificacao": "Alto",
+    "data_qualificacao": "03/09/2025 18:43:20",
+    "observacoes_qualificacao": "Lead altamente qualificado! Critérios atingidos: Telefone válido, CNAE compatível, Endereço válido, Nome válido"
+  },
+  {
+    "nome": "Padaria do João",
+    "telefone": "(11) 88888-8888",
+    "website": "",
+    "endereco": "Av. Paulista, 456, Bela Vista, São Paulo, SP",
+    "cnae": "4722-0/00",
+    "fonte": "Teste",
+    "data_coleta": "03/09/2025 18:43:20",
+    "score": 5,
+    "criterios_atingidos": [
+      "Telefone válido",
+      "CNAE compatível",
+      "Endereço válido",
+      "Nome válido"
+    ],
+    "qualificado": true,
+    "nivel_qualificacao": "Alto",
+    "data_qualificacao": "03/09/2025 18:43:20",
+    "observacoes_qualificacao": "Lead altamente qualificado! Critérios atingidos: Telefone válido, CNAE compatível, Endereço válido, Nome válido"
+  },
+  {
+    "nome": "Academia Fitness",
+    "telefone": "(11) 77777-7777",
+    "website": "https://academiafitness.com.br",
+    "endereco": "Rua Augusta, 789, Consolação, São Paulo, SP",
+    "cnae": "9311-5/01",
+    "instagram": "https://instagram.com/academiafitness",
+    "fonte": "Teste",
+    "data_coleta": "03/09/2025 18:43:20",
+    "score": 6,
+    "criterios_atingidos": [
+      "Telefone válido",
+      "CNAE compatível",
+      "Mídia social",
+      "Endereço válido",
+      "Nome válido"
+    ],
+    "qualificado": true,
+    "nivel_qualificacao": "Alto",
+    "data_qualificacao": "03/09/2025 18:43:20",
+    "observacoes_qualificacao": "Lead altamente qualificado! Critérios atingidos: Telefone válido, CNAE compatível, Mídia social, Endereço válido, Nome válido"
+  }
+]

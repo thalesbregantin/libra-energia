@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Conectividade - Libra Energia API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">🔍 Teste de Conectividade - Libra Energia API</h1>
+        
+        <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Status da API</h2>
+            <div id="api-status" class="text-lg">
+                <span class="loading-spinner">⏳</span> Testando conectividade...
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h3 class="text-lg font-semibold mb-4">📡 Endpoints Testados</h3>
+                <div id="endpoints-results" class="space-y-2">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h3 class="text-lg font-semibold mb-4">📊 Dados de Leads</h3>
+                <div id="leads-results">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <button onclick="runAllTests()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                🔄 Executar Todos os Testes
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        // Test all endpoints
+        async function runAllTests() {
+            console.log('🧪 Iniciando testes de conectividade...');
+            
+            // Clear previous results
+            document.getElementById('endpoints-results').innerHTML = '';
+            document.getElementById('leads-results').innerHTML = '';
+            
+            // Test endpoints
+            const endpoints = [
+                { name: 'Root', url: '/', method: 'GET' },
+                { name: 'Health', url: '/api/health', method: 'GET' },
+                { name: 'Leads (Simple)', url: '/leads', method: 'GET' },
+                { name: 'Leads (Full)', url: '/api/leads', method: 'GET' },
+                { name: 'Stats', url: '/api/leads/stats', method: 'GET' }
+            ];
+            
+            for (const endpoint of endpoints) {
+                await testEndpoint(endpoint);
+            }
+            
+            // Test campaign endpoint
+            await testCampaignEndpoint();
+        }
+        
+        // Test individual endpoint
+        async function testEndpoint(endpoint) {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'flex items-center justify-between p-2 border rounded';
+            
+            try {
+                const response = await fetch(`${API_BASE}${endpoint.url}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <span class="text-green-600">✅ ${endpoint.name}</span>
+                        <span class="text-sm text-gray-500">${response.status}</span>
+                    `;
+                    console.log(`✅ ${endpoint.name}:`, data);
+                } else {
+                    resultDiv.innerHTML = `
+                        <span class="text-red-600">❌ ${endpoint.name}</span>
+                        <span class="text-sm text-gray-500">${response.status}</span>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <span class="text-red-600">❌ ${endpoint.name}</span>
+                    <span class="text-sm text-gray-500">Erro</span>
+                `;
+                console.error(`❌ ${endpoint.name}:`, error);
+            }
+            
+            document.getElementById('endpoints-results').appendChild(resultDiv);
+        }
+        
+        // Test campaign endpoint
+        async function testCampaignEndpoint() {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'flex items-center justify-between p-2 border rounded';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/campaign/run`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `
+                        <span class="text-green-600">✅ Campaign Run</span>
+                        <span class="text-sm text-gray-500">${data.data.leads_collected} leads</span>
+                    `;
+                    console.log('✅ Campaign Run:', data);
+                    
+                    // Show leads data
+                    document.getElementById('leads-results').innerHTML = `
+                        <div class="space-y-2">
+                            <div class="text-sm text-gray-600">Leads Coletados: <span class="font-semibold">${data.data.leads_collected}</span></div>
+                            <div class="text-sm text-gray-600">Leads Qualificados: <span class="font-semibold">${data.data.leads_qualified}</span></div>
+                            <div class="text-sm text-gray-600">Arquivo: <span class="font-semibold">${data.data.filename}</span></div>
+                            <div class="text-sm text-gray-600">Timestamp: <span class="font-semibold">${new Date(data.data.timestamp).toLocaleString('pt-BR')}</span></div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <span class="text-red-600">❌ Campaign Run</span>
+                        <span class="text-sm text-gray-500">${response.status}</span>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <span class="text-red-600">❌ Campaign Run</span>
+                    <span class="text-sm text-gray-500">Erro</span>
+                `;
+                console.error('❌ Campaign Run:', error);
+            }
+            
+            document.getElementById('endpoints-results').appendChild(resultDiv);
+        }
+        
+        // Test API status on load
+        async function testAPIStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('api-status').innerHTML = `
+                        <span class="text-green-600">✅ API Online</span>
+                        <span class="text-sm text-gray-500 ml-2">${data.message}</span>
+                    `;
+                } else {
+                    document.getElementById('api-status').innerHTML = `
+                        <span class="text-red-600">❌ API Offline</span>
+                        <span class="text-sm text-gray-500 ml-2">Status: ${response.status}</span>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('api-status').innerHTML = `
+                    <span class="text-red-600">❌ API Offline</span>
+                    <span class="text-sm text-gray-500 ml-2">Erro: ${error.message}</span>
+                `;
+            }
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            testAPIStatus();
+        });
+    </script>
+</body>
+</html>

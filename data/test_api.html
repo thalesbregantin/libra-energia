@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste API</title>
+</head>
+<body>
+    <h1>Teste da API da Libra Energia</h1>
+    <button onclick="testAPI()">Testar API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testando...';
+            
+            try {
+                console.log('Tentando acessar API...');
+                const response = await fetch('http://localhost:8000/api/leads');
+                console.log('Resposta recebida:', response);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Dados recebidos:', data);
+                    resultDiv.innerHTML = `
+                        <h3>✅ API Funcionando!</h3>
+                        <p>Status: ${response.status}</p>
+                        <p>Leads encontrados: ${data.data ? data.data.length : 'N/A'}</p>
+                        <p>Sucesso: ${data.success}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3>❌ Erro na API</h3>
+                        <p>Status: ${response.status}</p>
+                        <p>Status Text: ${response.statusText}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro ao acessar API:', error);
+                resultDiv.innerHTML = `
+                    <h3>❌ Erro de Conexão</h3>
+                    <p>Erro: ${error.message}</p>
+                    <p>Tipo: ${error.name}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

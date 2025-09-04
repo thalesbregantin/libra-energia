@@ -1,0 +1,23 @@
+# Dependências para o sistema de automação de prospecção
+selenium==4.15.2
+beautifulsoup4==4.12.2
+requests==2.31.0
+pandas==2.1.3
+openpyxl==3.1.2
+python-dotenv==1.0.0
+google-api-python-client==2.108.0
+google-auth-httplib2==0.1.1
+google-auth-oauthlib==1.1.0
+gspread==5.12.0
+oauth2client==4.1.3
+firebase-admin==6.2.0
+twilio==8.10.0
+fastapi==0.104.1
+uvicorn==0.24.0
+streamlit==1.28.1
+plotly==5.17.0
+numpy==1.24.3
+webdriver-manager==4.0.1
+lxml==4.9.3
+fake-useragent==1.4.0
+time-delay==0.1.0
