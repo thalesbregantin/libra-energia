@@ -7,7 +7,7 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 
 # Database
-sqlite3  # Built-in with Python
+# sqlite3 is built-in with Python
 
 # HTTP Requests
 requests==2.31.0
@@ -41,10 +41,51 @@ python-dateutil==2.8.2
 # JSON Processing
 jsonschema==4.20.0
 
-# Testing
+# Testing Framework - TDD Robusto (Big Tech Style)
 pytest==7.4.3
 pytest-asyncio==0.21.1
 pytest-cov==4.1.0
+pytest-html==3.2.0
+pytest-xdist==3.3.0
+pytest-timeout==2.1.0
+pytest-benchmark==4.0.0
+pytest-selenium==4.1.0
+pytest-json-report==1.5.0
+pytest-clarity==1.0.1
+pytest-sugar==0.9.7
+pytest-mock==3.11.0
+pytest-env==1.1.0
+
+# Coverage e Relatórios
+coverage==7.2.0
+coverage-badge==1.1.0
+
+# Testes de Performance
+locust==2.15.0
+
+# Testes de API
+requests-mock==1.11.0
+responses==0.23.0
+
+# Testes de Banco de Dados
+factory-boy==3.3.0
+
+# Testes de Frontend
+playwright==1.35.0
+
+# Mocking e Fixtures
+freezegun==1.2.0
+faker==18.9.0
+mimesis==9.0.0
+
+# Validação e Linting
+isort==5.12.0
+bandit==1.7.0
+safety==2.3.0
+
+# CI/CD
+pre-commit==3.3.0
+tox==4.6.0
 
 # Development
 black==23.11.0

@@ -69,12 +69,18 @@ async function loadData() {
         
         const result = await response.json();
         console.log('✅ Dados carregados:', result);
+        console.log('📊 Estrutura dos dados:', {
+            success: result.success,
+            hasData: !!result.data,
+            dataLength: result.data ? result.data.length : 0,
+            dataType: typeof result.data
+        });
         
         if (result.success && result.data) {
             allLeads = result.data;
             filteredLeads = [...allLeads];
             updateDashboard();
-            updateStatus(`Dados carregados: ${allLeads.length} leads (${result.source})`, 'success');
+            updateStatus(`Dados carregados: ${allLeads.length} leads (API)`, 'success');
             
             // Cache no localStorage
             localStorage.setItem('leads', JSON.stringify(allLeads));
@@ -96,7 +102,7 @@ async function loadData() {
                     allLeads = result.data;
                     filteredLeads = [...allLeads];
                     updateDashboard();
-                    updateStatus(`Dados carregados: ${allLeads.length} leads (fallback)`, 'success');
+                    updateStatus(`Dados carregados: ${allLeads.length} leads (API fallback)`, 'success');
                     return;
                 }
             }
@@ -104,66 +110,15 @@ async function loadData() {
             console.log('❌ Fallback também falhou:', fallbackError);
         }
         
-        // Último recurso: carregar arquivo local
-        await loadLocalData();
+        // Se não conseguiu carregar da API, usar dados de exemplo
+        console.log('⚠️ Usando dados de exemplo...');
+        allLeads = getSampleData();
+        filteredLeads = [...allLeads];
+        updateDashboard();
+        updateStatus('Usando dados de exemplo - API não disponível', 'warning');
     }
 }
 
-// Load local data as fallback
-async function loadLocalData() {
-    console.log('📁 Tentando carregar dados locais...');
-    
-    // Primeiro, tentar localStorage
-    const cachedLeads = localStorage.getItem('leads');
-    const cachedTimestamp = localStorage.getItem('leads_timestamp');
-    
-    if (cachedLeads && cachedTimestamp) {
-        const cacheAge = new Date() - new Date(cachedTimestamp);
-        if (cacheAge < 5 * 60 * 1000) { // 5 minutos
-            console.log('📦 Carregando dados do cache...');
-            allLeads = JSON.parse(cachedLeads);
-            filteredLeads = [...allLeads];
-            updateDashboard();
-            updateStatus(`Dados carregados do cache: ${allLeads.length} leads`, 'warning');
-            return;
-        }
-    }
-    
-    const leadFiles = [
-        'leads_coletados_20250904_123747.json',  // Arquivo mais recente da campanha
-        'leads_coletados_20250904_115438.json',
-        'leads_coletados_20250903_213934.json',
-        'leads_coletados_20250903_200444.json',
-        'leads_coletados_20250903_193153.json',
-        'leads_coletados_20250903_171709.json'
-    ];
-    
-    for (const filename of leadFiles) {
-        try {
-            const response = await fetch(filename);
-            if (response.ok) {
-                const data = await response.json();
-                if (Array.isArray(data) && data.length > 0) {
-                    console.log(`✅ Dados locais carregados: ${filename}`);
-                    allLeads = data;
-                    filteredLeads = [...allLeads];
-                    updateDashboard();
-                    updateStatus(`Dados locais carregados: ${allLeads.length} leads`, 'success');
-                    return;
-                }
-            }
-        } catch (error) {
-            console.log(`❌ Erro ao carregar ${filename}:`, error);
-        }
-    }
-    
-    // Se não conseguiu carregar nada, usar dados de exemplo
-    console.log('⚠️ Usando dados de exemplo...');
-    allLeads = getSampleData();
-    filteredLeads = [...allLeads];
-    updateDashboard();
-    updateStatus('Usando dados de exemplo', 'warning');
-}
 
 // Get sample data
 function getSampleData() {
@@ -242,6 +197,7 @@ function updateStatus(message, type) {
 // Update dashboard metrics
 function updateDashboard() {
     console.log('📊 Atualizando dashboard...');
+    console.log('📋 Leads disponíveis:', allLeads ? allLeads.length : 0);
     
     if (!allLeads || allLeads.length === 0) {
         console.log('⚠️ Nenhum lead disponível');
